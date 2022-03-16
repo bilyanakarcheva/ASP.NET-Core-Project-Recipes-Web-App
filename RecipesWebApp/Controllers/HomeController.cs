@@ -1,14 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using RecipesWebApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RecipesWebApp.Controllers
+﻿namespace RecipesWebApp.Controllers
 {
+    using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using RecipesWebApp.Models;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
