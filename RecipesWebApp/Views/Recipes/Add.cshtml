@@ -1,0 +1,45 @@
+﻿@model AddRecipeFormModel
+
+@{
+    ViewData["Title"] = "Add Recipe - Tasty Bits";
+}
+
+<form method="post">
+  <div class="form-group">
+    <label asp-for="Title">Recipe Title</label>
+    <input asp-for="Title" class="form-control" placeholder="Chicken noodle soup, etc.">
+  </div>
+
+    <div class="form-group">
+    <label asp-for="Instructions">Instructions</label>
+    <textarea asp-for="Instructions" class="form-control" placeholder="1.Peel and finely slice the shallots, etc."></textarea>
+  </div>
+    <div class="form-group">
+    <label asp-for="ImageUrl">Image</label>
+    <input asp-for="ImageUrl" class="form-control" placeholder="Paste URL here...">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Example select</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Example multiple select</label>
+    <select multiple class="form-control" id="exampleFormControlSelect2">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+</form>

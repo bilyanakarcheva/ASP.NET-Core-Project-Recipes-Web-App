@@ -3,7 +3,7 @@
     public class AddRecipeFormModel
     {
         // We use init, since they are not editable in theory. Should stay the way we receive it.
-        public string Name { get; init; }
+        public string Title { get; init; }
 
         //Check format later on!!
         public string CookingTime { get; init; }
