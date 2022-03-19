@@ -1,4 +1,7 @@
-﻿namespace RecipesWebApp.Models.Recipes
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace RecipesWebApp.Models.Recipes
 {
     public class AddRecipeFormModel
     {
@@ -12,8 +15,11 @@
 
         public string Instructions { get; init; }
 
+        [Display(Name = "Image URL")]
         public string ImageUrl { get; init; }
 
         public int MealTypeId { get; init; }
+
+        public IEnumerable<RecipeMealTypeViewModel> MealTypes { get; set; }
     }
 }
