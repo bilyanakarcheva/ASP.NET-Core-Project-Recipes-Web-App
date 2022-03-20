@@ -3,7 +3,9 @@
     public class DataConstants
     {
         public const int RecipeNameMaxLength = 30;
-        
+
+        public const int RecipeNameMinLength = 2;
+
         public const int RecipePortionsMinRange = 1;
 
         public const int RecipePortionsMaxRange = 10;

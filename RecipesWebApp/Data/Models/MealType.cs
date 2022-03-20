@@ -10,6 +10,6 @@
         [Required]
         public string Name { get; set; }
 
-        public IEnumerable<Recipe> Recipes { get; set; }
+        public IEnumerable<Recipe> Recipes { get; init; } = new List<Recipe>();
     }
 }

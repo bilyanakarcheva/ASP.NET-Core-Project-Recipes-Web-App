@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RecipesWebApp.Data;
 using RecipesWebApp.Data.Models;
+using System;
 using System.Linq;
 
 namespace RecipesWebApp.Infrastructure
@@ -18,12 +19,35 @@ namespace RecipesWebApp.Infrastructure
 
             data.Database.Migrate();
 
-            SeedCategories(data);
+            SeedMealTypes(data);
+
+            //SeedPortions();
 
             return app;
         }
 
-        private static void SeedCategories(RecipesDbContext data)
+        //private static void SeedPortions(RecipesDbContext data)
+        //{
+        //    if (data.Portions.Any())
+        //    {
+        //        return;
+        //    }
+
+        //    data.Portions.AddRange(new[]
+        //    {
+        //        new MealType { Name = "1" },
+        //        new MealType { Name = "2" },
+        //        new MealType { Name = "3" },
+        //        new MealType { Name = "4" },
+        //        new MealType { Name = "5" },
+        //        new MealType { Name = "6" },
+        //        new MealType { Name = "7" },
+        //    });
+
+        //    data.SaveChanges();
+        //}
+
+        private static void SeedMealTypes(RecipesDbContext data)
         {
             if (data.MealTypes.Any())
             {

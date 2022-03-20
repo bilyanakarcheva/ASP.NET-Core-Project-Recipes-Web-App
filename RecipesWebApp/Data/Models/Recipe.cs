@@ -23,6 +23,9 @@
         [Range(RecipePortionsMinRange, RecipePortionsMaxRange)]
         public int Portions { get; set; }
 
+        [Required]
+        public string Ingredients { get; set; }
+
         //Text field
         [Required]
         public string Instructions { get; set; }
@@ -37,8 +40,12 @@
         //Init - not editable
         public MealType MealType { get; init; }
 
+
+        //public int IngredientId { get; set; }
+
+
         //How to add them?
-        public IEnumerable<Ingredient> Ingredients { get; set; }
+        //public IEnumerable<Ingredient> Ingredients { get; set; }
     }
 
 }

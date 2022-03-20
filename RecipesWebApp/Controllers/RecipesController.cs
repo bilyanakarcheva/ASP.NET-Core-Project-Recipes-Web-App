@@ -11,9 +11,8 @@
         private readonly RecipesDbContext data;
 
         public RecipesController(RecipesDbContext data)
-        {
-            this.data = data;
-        }
+         => this.data = data;
+        
 
         //  HTTP GET - Visualizing the view
         public IActionResult Add() => View(new AddRecipeFormModel
