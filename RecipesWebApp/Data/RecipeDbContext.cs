@@ -13,7 +13,7 @@
 
         public DbSet<Recipe> Recipes { get; init; }
 
-        public DbSet<Ingredient> Ingredients { get; init; }
+        // DbSet<Ingredient> Ingredients { get; init; }
 
         public DbSet<MealType> MealTypes { get; init; }
 

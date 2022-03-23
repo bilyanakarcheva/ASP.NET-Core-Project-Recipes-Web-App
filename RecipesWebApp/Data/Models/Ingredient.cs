@@ -11,7 +11,6 @@
         public string Name { get;}
 
         [Required]
-        [MaxLength(IngredientQuantityMaxLength)]
         public string Quantity { get; set; }
 
         public int RecipeId { get; set; }

@@ -17,6 +17,10 @@ namespace RecipesWebApp.Infrastructure
 
             var data = scopedServices.ServiceProvider.GetService<RecipesDbContext>();
 
+            //Console.WriteLine(data.Database.EnsureDeleted());
+
+            //data.Database.EnsureCreated();
+
             data.Database.Migrate();
 
             SeedMealTypes(data);
