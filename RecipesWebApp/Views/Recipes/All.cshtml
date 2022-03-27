@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<RecipeListingViewModel>
 
-@{
-    ViewData["Title"] = "Home Page";
-}
 
     <div class="jumbotron">
       <h1 class="display-4">Welcome to Tasty Bits!</h1>
@@ -14,12 +11,8 @@
       </p>
     </div>
 
-
-@if (Model.Any())
-{
-    <div class="text-center" style="margin:initial">
-        <h1 class="display-4" style="padding:15px; font-size:40px">Our Newest Recipies</h1>
-        <!--<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>-->
+    <div class="text-center">
+        <h1 class="display-4" style="padding:15px">All Recipies</h1>
     </div>
     <div  style="margin-left:60px">
         @foreach (var recipe in Model)
@@ -33,9 +26,8 @@
                 <a asp-conreoller="Cars" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary" style="cursor: pointer">Details</a>
               </div>
             </div>
-    }
+        }
     </div>
-}
+<!--}-->
 
-
-
+    <script src="~/js/site.js" asp-append-version="true"></script>

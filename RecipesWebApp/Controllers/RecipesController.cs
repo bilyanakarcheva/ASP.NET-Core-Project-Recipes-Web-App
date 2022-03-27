@@ -21,6 +21,7 @@
             MealTypes = this.GetRecipeMealTypes()
         });
 
+        // HTTP POST - Recieves data from the form.
         [HttpPost]
         public IActionResult Add(AddRecipeFormModel recipe)
         {
@@ -50,7 +51,25 @@
             this.data.Recipes.Add(recipeData);
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("All");
+        }
+
+        public IActionResult All()
+        {
+            var recipes = this.data
+                .Recipes
+                .OrderByDescending(r => r.Id)
+                .Select(r => new RecipeListingViewModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    CookingTime = r.CookingTime,
+                    ImageUrl = r.ImageUrl,
+                    MealType = r.MealType.Name
+                })
+                .ToList();
+
+            return View(recipes);
         }
 
         private IEnumerable<RecipeMealTypeViewModel> GetRecipeMealTypes()
