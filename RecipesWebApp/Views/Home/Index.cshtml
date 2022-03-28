@@ -4,24 +4,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="jumbotron">
+@if (!Model.Any())
+{
+  <div class="jumbotron">
       <h1 class="display-4">Welcome to Tasty Bits!</h1>
       <p class="lead">Enjoy the best experience in the culinary world!</p>
       <hr class="my-4">
       <p>There are currently no recipes available. Would you like to add one?</p>
       <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Add Recipe</a>
+        <a class="btn btn-primary btn-lg" asp-controller="Recipes" asp-action="Add" role="button">Add Recipe</a>
       </p>
+    </div>  
+}
+else
+{
+     <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4 text-center">Welcome to Tasty Bits!</h1>
+        <p class="lead text-center">Enjoy the best experience in the culinary world!</p>
+      </div>
     </div>
 
-
-@if (Model.Any())
-{
     <div class="text-center" style="margin:initial">
-        <h1 class="display-4" style="padding:15px; font-size:40px">Our Newest Recipies</h1>
+        <h1 class="display-4" style="padding:15px; font-size:40px">Newest Recipies</h1>
         <!--<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>-->
     </div>
-    <div  style="margin-left:60px">
+    <div  class="offset-md-1">
         @foreach (var recipe in Model)
         {
             <div class="card inline-blocks" style="width: 18rem; display: inline-block; position:center; margin:12px"
@@ -30,10 +38,13 @@
               <div class="card-body">
                 <h5 class="card-title">@recipe.Title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a asp-conreoller="Cars" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary" style="cursor: pointer">Details</a>
+                <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary" style="cursor: pointer">Details</a>
               </div>
             </div>
-    }
+        }
+    </div>
+    <div>
+        <a asp-controller="Recipes" asp-action="All" class="btn btn-primary btn-lg offset-md-5 col-md-2 col-sm-12" style="cursor: pointer;">See All Recipes</a>
     </div>
 }
 

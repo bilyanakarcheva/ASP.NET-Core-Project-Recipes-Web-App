@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<RecipeListingViewModel>
 
-
+@if (!Model.Any())
+{
     <div class="jumbotron">
-      <h1 class="display-4">Welcome to Tasty Bits!</h1>
-      <p class="lead">Enjoy the best experience in the culinary world!</p>
-      <hr class="my-4">
-      <p>There are currently no recipes available. Would you like to add one?</p>
-      <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Add Recipe</a>
-      </p>
+        <h1 class="display-4">Welcome to Tasty Bits!</h1>
+        <p class="lead">Enjoy the best experience in the culinary world!</p>
+        <hr class="my-4">
+        <p>There are currently no recipes available. Would you like to add one?</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" asp-controller="Recipes" asp-action="Add" role="button">Add Recipe</a>
+        </p>
     </div>
-
+}
+else
+{
     <div class="text-center">
         <h1 class="display-4" style="padding:15px">All Recipies</h1>
     </div>
@@ -23,11 +26,9 @@
               <div class="card-body">
                 <h5 class="card-title">@recipe.Title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a asp-conreoller="Cars" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary" style="cursor: pointer">Details</a>
+                <a asp-controller="Cars" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary" style="cursor: pointer">Details</a>
               </div>
             </div>
         }
     </div>
-<!--}-->
-
-    <script src="~/js/site.js" asp-append-version="true"></script>
+}
