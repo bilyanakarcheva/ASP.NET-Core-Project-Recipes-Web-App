@@ -18,18 +18,18 @@
 }
 else
 {
-     <div class="jumbotron jumbotron-fluid">
+     <div class="jumbotron jumbotron-fluid mt-4">
       <div class="container">
         <h1 class="display-4 text-center">Welcome to Tasty Bits!</h1>
         <p class="lead text-center">Enjoy the best experience in the culinary world!</p>
       </div>
     </div>
 
-    <div class="text-center" style="margin:initial">
+    <div class="text-center" style="margin-bottom:12px">
         <h1 class="display-4" style="padding:15px; font-size:40px">Newest Recipies</h1>
         <!--<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>-->
     </div>
-    <div  class="offset-md-1">
+    <div  class="offset-md-1" style="margin-bottom:15px">
         @foreach (var recipe in Model)
         {
             <div class="card inline-blocks" style="width: 18rem; display: inline-block; position:center; margin:12px"
@@ -44,7 +44,7 @@ else
         }
     </div>
     <div>
-        <a asp-controller="Recipes" asp-action="All" class="btn btn-primary btn-lg offset-md-5 col-md-2 col-sm-12" style="cursor: pointer;">See All Recipes</a>
+        <a asp-controller="Recipes" asp-action="All" class="btn btn-primary btn-lg offset-md-5 col-md-2 col-sm-12" style="margin-bottom:12px; cursor: pointer;">See All Recipes</a>
     </div>
 }
 

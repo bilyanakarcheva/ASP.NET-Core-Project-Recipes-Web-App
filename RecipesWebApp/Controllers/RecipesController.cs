@@ -54,11 +54,33 @@
             return RedirectToAction("All");
         }
 
-        public IActionResult All()
+        public IActionResult All(
+            string searchWord,
+            RecipeSorting sorting)
         {
-            var recipes = this.data
-                .Recipes
-                .OrderByDescending(r => r.Id)
+            var recipeQuery = this.data.Recipes.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchWord))
+            {
+                var searchWordToLower = searchWord.ToLower();
+
+                recipeQuery = recipeQuery.Where(r =>
+                r.Title.ToLower().Contains(searchWordToLower) ||
+                r.Ingredients.ToLower().Contains(searchWordToLower) ||
+                r.Instructions.ToLower().Contains(searchWordToLower));
+            }
+
+            recipeQuery = sorting switch
+            {
+                RecipeSorting.Newest => recipeQuery.OrderByDescending(r => r.Id),
+                RecipeSorting.Oldest => recipeQuery.OrderBy(r => r.Id),
+                RecipeSorting.TitleAscedning => recipeQuery.OrderBy(r => r.Title),
+                RecipeSorting.TitleDescedning => recipeQuery.OrderByDescending(r => r.Title),
+                _ => recipeQuery.OrderByDescending(r => r.Id)
+                //If enum is non-existent sort by Id
+            };
+
+            var recipes = recipeQuery
                 .Select(r => new RecipeListingViewModel
                 {
                     Id = r.Id,
@@ -69,7 +91,13 @@
                 })
                 .ToList();
 
-            return View(recipes);
+
+            return View(new RecipeSearchViewModel
+            {
+                Recipes = recipes,
+                SearchWord = searchWord,
+                Sorting = sorting
+            });
         }
 
         private IEnumerable<RecipeMealTypeViewModel> GetRecipeMealTypes()
