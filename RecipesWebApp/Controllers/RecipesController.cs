@@ -54,15 +54,13 @@
             return RedirectToAction("All");
         }
 
-        public IActionResult All(
-            string searchWord,
-            RecipeSorting sorting)
+        public IActionResult All([FromQuery]RecipeSearchQueryModel query)
         {
             var recipeQuery = this.data.Recipes.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searchWord))
+            if (!string.IsNullOrWhiteSpace(query.SearchWord))
             {
-                var searchWordToLower = searchWord.ToLower();
+                var searchWordToLower = query.SearchWord.ToLower();
 
                 recipeQuery = recipeQuery.Where(r =>
                 r.Title.ToLower().Contains(searchWordToLower) ||
@@ -70,7 +68,7 @@
                 r.Instructions.ToLower().Contains(searchWordToLower));
             }
 
-            recipeQuery = sorting switch
+            recipeQuery = query.Sorting switch
             {
                 RecipeSorting.Newest => recipeQuery.OrderByDescending(r => r.Id),
                 RecipeSorting.Oldest => recipeQuery.OrderBy(r => r.Id),
@@ -81,6 +79,8 @@
             };
 
             var recipes = recipeQuery
+                .Skip((query.CurrentPage - 1) * RecipeSearchQueryModel.RecipesPerPage)
+                .Take(RecipeSearchQueryModel.RecipesPerPage)
                 .Select(r => new RecipeListingViewModel
                 {
                     Id = r.Id,
@@ -92,11 +92,11 @@
                 .ToList();
 
 
-            return View(new RecipeSearchViewModel
+            return View(new RecipeSearchQueryModel
             {
                 Recipes = recipes,
-                SearchWord = searchWord,
-                Sorting = sorting
+                SearchWord = query.SearchWord,
+                Sorting = query.Sorting
             });
         }
 

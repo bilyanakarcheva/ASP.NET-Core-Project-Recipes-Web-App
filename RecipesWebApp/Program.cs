@@ -2,6 +2,8 @@ namespace RecipesWebApp
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;
+    using RecipesWebApp.Models.Recipes;
+    using System;
 
     public class Program
     {
@@ -16,5 +18,6 @@ namespace RecipesWebApp
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
