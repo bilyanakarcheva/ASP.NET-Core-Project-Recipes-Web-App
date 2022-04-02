@@ -78,6 +78,8 @@
                 //If enum is non-existent sort by Id
             };
 
+            var totalRecipes = recipeQuery.Count();
+
             var recipes = recipeQuery
                 .Skip((query.CurrentPage - 1) * RecipeSearchQueryModel.RecipesPerPage)
                 .Take(RecipeSearchQueryModel.RecipesPerPage)
@@ -91,13 +93,10 @@
                 })
                 .ToList();
 
+            query.Recipes = recipes;
+            query.TotalRecipes = totalRecipes;
 
-            return View(new RecipeSearchQueryModel
-            {
-                Recipes = recipes,
-                SearchWord = query.SearchWord,
-                Sorting = query.Sorting
-            });
+            return View(query);
         }
 
         private IEnumerable<RecipeMealTypeViewModel> GetRecipeMealTypes()
