@@ -9,7 +9,7 @@ namespace RecipesWebApp
     using Microsoft.Extensions.Hosting;
     using RecipesWebApp.Data;
     using RecipesWebApp.Infrastructure;
-
+    using RecipesWebApp.Services.Statistics;
 
     public class Startup
     {
@@ -31,6 +31,8 @@ namespace RecipesWebApp
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<RecipesDbContext>();
             services.AddControllersWithViews();
+
+            services.AddTransient<IStatisticsService, StatisticsSevice>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

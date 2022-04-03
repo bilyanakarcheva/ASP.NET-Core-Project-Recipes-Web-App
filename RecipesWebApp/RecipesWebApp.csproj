@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20220314200028_ThreeTables.cs" />
     <Compile Remove="Data\Migrations\20220314200028_ThreeTables.Designer.cs" />
+    <Compile Remove="IStatisticService.cs" />
   </ItemGroup>
 
   <ItemGroup>

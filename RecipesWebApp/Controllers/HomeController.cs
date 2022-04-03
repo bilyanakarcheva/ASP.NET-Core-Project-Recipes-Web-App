@@ -7,18 +7,22 @@
     using RecipesWebApp.Data;
     using RecipesWebApp.Models;
     using RecipesWebApp.Models.Recipes;
+    using RecipesWebApp.Services.Statistics;
 
     public class HomeController : Controller
     {
+        private readonly IStatisticsService statistics;
         private readonly RecipesDbContext data;
 
-        private readonly ILogger<HomeController> _logger;
+       // private readonly ILogger<HomeController> _logger;
 
         public HomeController(
-            ILogger<HomeController> logger,
+            IStatisticsService statistics,
+           // ILogger<HomeController> logger,
             RecipesDbContext data)
         {
-            _logger = logger;
+            this.statistics = statistics;
+           // _logger = logger;
             this.data = data;
         }
 
@@ -37,6 +41,8 @@
                 })
                 .Take(6)
                 .ToList();
+
+            var totalStatistics = this.statistics.Total();
 
             return View(recipes);
         }
