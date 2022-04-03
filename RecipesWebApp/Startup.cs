@@ -9,6 +9,8 @@ namespace RecipesWebApp
     using Microsoft.Extensions.Hosting;
     using RecipesWebApp.Data;
     using RecipesWebApp.Infrastructure;
+    using RecipesWebApp.Services;
+    using RecipesWebApp.Services.Recipes;
     using RecipesWebApp.Services.Statistics;
 
     public class Startup
@@ -33,6 +35,7 @@ namespace RecipesWebApp
             services.AddControllersWithViews();
 
             services.AddTransient<IStatisticsService, StatisticsSevice>();
+            services.AddTransient<IRecipeService, RecipeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

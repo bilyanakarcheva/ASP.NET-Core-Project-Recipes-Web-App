@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RecipeListingViewModel>
+﻿@model IEnumerable<RecipeServiceModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -37,7 +37,6 @@ else
               <img class="card-img-top" src="@recipe.ImageUrl" alt="@recipe.Title">
               <div class="card-body">
                 <h5 class="card-title">@recipe.Title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary" style="cursor: pointer">Details</a>
               </div>
             </div>

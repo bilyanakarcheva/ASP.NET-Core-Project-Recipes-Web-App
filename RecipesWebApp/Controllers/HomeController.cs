@@ -7,6 +7,7 @@
     using RecipesWebApp.Data;
     using RecipesWebApp.Models;
     using RecipesWebApp.Models.Recipes;
+    using RecipesWebApp.Services.Recipes;
     using RecipesWebApp.Services.Statistics;
 
     public class HomeController : Controller
@@ -28,21 +29,24 @@
 
         public IActionResult Index()
         {
+            var totalStatistics = this.statistics.Total();
+            var totalRecipes = totalStatistics.TotalRecipes;
+
             var recipes = this.data
                 .Recipes
                 .OrderByDescending(r => r.Id)
-                .Select(r => new RecipeListingViewModel
+                .Select(r => new RecipeServiceModel
                 {
                     Id = r.Id,
                     Title = r.Title,
                     CookingTime = r.CookingTime,
                     ImageUrl = r.ImageUrl,
-                    MealType = r.MealType.Name
-                })
+                    MealTypeName = r.MealType.Name,
+                    TotalRecipes = totalRecipes
+        })
                 .Take(6)
                 .ToList();
 
-            var totalStatistics = this.statistics.Total();
 
             return View(recipes);
         }

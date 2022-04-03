@@ -1,5 +1,6 @@
 ﻿namespace RecipesWebApp.Models.Recipes
 {
+    using RecipesWebApp.Services.Recipes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -19,6 +20,6 @@
 
         public int TotalRecipes { get; set; }
 
-        public IEnumerable<RecipeListingViewModel> Recipes { get; set; }
+        public IEnumerable<RecipeServiceModel> Recipes { get; set; }
     }
 }
