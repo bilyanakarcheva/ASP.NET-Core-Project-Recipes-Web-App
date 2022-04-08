@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using static DataConstants;
+    using static DataConstants.Recipe;
 
     public class Recipe
     {
@@ -10,17 +10,17 @@
 
         //Text field
         [Required]
-        [MaxLength(RecipeNameMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Title { get; set; }
 
         //Check format later on!! Drop down - hours and minites
         [Required]
-        [MaxLength(RecipeCookingTimeMaxLength)]
+        [MaxLength(CookingTimeMaxLength)]
         public string CookingTime { get; set; }
 
         //Dropdown - 1 to 10
         [Required]
-        [Range(RecipePortionsMinRange, RecipePortionsMaxRange)]
+        [Range(PortionsMinRange, PortionsMaxRange)]
         public int Portions { get; set; }
 
         [Required]
@@ -40,6 +40,9 @@
         //Init - not editable
         public MealType MealType { get; init; }
 
+        public int ContributorId { get; init; }
+
+        public Contributor Contributor { get; init; }
 
         //public int IngredientId { get; set; }
 

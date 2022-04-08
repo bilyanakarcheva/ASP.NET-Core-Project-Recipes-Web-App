@@ -17,19 +17,7 @@
 
 }
 
-@if (Model == null)
-{
-    <div class="jumbotron">
-        <h1 class="display-4">Welcome to Tasty Bits!</h1>
-        <p class="lead">Enjoy the best experience in the culinary world!</p>
-        <hr class="my-4">
-        <p>There are currently no recipes available. Would you like to add one?</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" asp-controller="Recipes" asp-action="Add" role="button">Add Recipe</a>
-        </p>
-    </div>
-}
-else
+@if (Model != null)
 {
     <div class="text-center">
         <h1 class="display-4 m-4">All Recipies</h1>
@@ -89,5 +77,17 @@ else
             asp-route-search="@Model.SearchWord"
             asp-route-sorting="@((int)Model.Sorting)">>></a>
         </div>
+    </div>
+}
+else
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Tasty Bits!</h1>
+        <p class="lead">Enjoy the best experience in the culinary world!</p>
+        <hr class="my-4">
+        <p>There are currently no recipes available. Would you like to add one?</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" asp-controller="Recipes" asp-action="Add" role="button">Add Recipe</a>
+        </p>
     </div>
 }

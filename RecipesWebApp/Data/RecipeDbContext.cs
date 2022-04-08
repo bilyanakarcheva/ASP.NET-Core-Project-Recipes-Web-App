@@ -1,5 +1,6 @@
 ﻿namespace RecipesWebApp.Data
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using RecipesWebApp.Data.Models;
@@ -17,6 +18,8 @@
 
         public DbSet<MealType> MealTypes { get; init; }
 
+        public DbSet<Contributor> Contributors { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
@@ -25,6 +28,12 @@
                 .WithMany(r => r.Recipes)
                 .HasForeignKey(r => r.MealTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Contributor>()
+                .HasOne<IdentityUser>()
+                .WithOne()
+                .HasForeignKey<Contributor>(c => c.UserId);
 
             base.OnModelCreating(builder);
         }

@@ -2,25 +2,31 @@
 {
     public class DataConstants
     {
-        public const int RecipeNameMinLength = 2;
+        public class Recipe
+        {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 30;
+            public const int PortionsMinRange = 1;
+            public const int PortionsMaxRange = 10;
+            //public const int IngredientQuantityMaxLength = 20;
+            public const int DescriptionMinLength = 20;
+            public const int InstructionsMinLength = 5;
+            public const int CookingTimeMinLength = 2;
+            public const int CookingTimeMaxLength = 20;
+        }
 
-        public const int RecipeNameMaxLength = 30;
+        public class MealType
+        {
+            public const int NameMaxLength = 30;
+        }
 
-        public const int RecipePortionsMinRange = 1;
+        public class Contributor
+        {
+            public const int FirstNameMaxLength = 20;
+            public const int LastNameMaxLength = 20;
 
-        public const int RecipePortionsMaxRange = 10;
+        }
 
-        public const int RecipeCookingTimeMaxLength = 20;
-
-        //public const int IngredientQuantityMaxLength = 20;
-
-        public const int RecipeDescriptionMinLength = 20;
-
-        public const int RecipeInstructionsMinLength = 5;
-
-        public const int CookingTimeMinLength = 2;
-
-        public const int CookingTimeMaxLength = 20;
 
     }
 }
