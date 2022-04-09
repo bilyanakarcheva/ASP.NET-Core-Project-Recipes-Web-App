@@ -10,8 +10,8 @@ using RecipesWebApp.Data;
 namespace RecipesWebApp.Data.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    [Migration("20220408175753_ContributorTable")]
-    partial class ContributorTable
+    [Migration("20220409092517_ContributorsTable")]
+    partial class ContributorsTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -370,7 +370,7 @@ namespace RecipesWebApp.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithOne()
                         .HasForeignKey("RecipesWebApp.Data.Models.Contributor", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -379,7 +379,7 @@ namespace RecipesWebApp.Data.Migrations
                     b.HasOne("RecipesWebApp.Data.Models.Contributor", "Contributor")
                         .WithMany("Recipes")
                         .HasForeignKey("ContributorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RecipesWebApp.Data.Models.MealType", "MealType")

@@ -2,7 +2,7 @@
 
 namespace RecipesWebApp.Data.Migrations
 {
-    public partial class ContributorTable : Migration
+    public partial class ContributorsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,7 @@ namespace RecipesWebApp.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -60,7 +60,7 @@ namespace RecipesWebApp.Data.Migrations
                 column: "ContributorId",
                 principalTable: "Contributors",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

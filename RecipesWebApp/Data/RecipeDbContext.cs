@@ -30,10 +30,18 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
+                .Entity<Recipe>()
+                .HasOne(r => r.Contributor)
+                .WithMany(c => c.Recipes)
+                .HasForeignKey(r => r.ContributorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
                 .Entity<Contributor>()
                 .HasOne<IdentityUser>()
                 .WithOne()
-                .HasForeignKey<Contributor>(c => c.UserId);
+                .HasForeignKey<Contributor>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

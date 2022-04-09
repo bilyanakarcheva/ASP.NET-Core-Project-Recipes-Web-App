@@ -368,7 +368,7 @@ namespace RecipesWebApp.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithOne()
                         .HasForeignKey("RecipesWebApp.Data.Models.Contributor", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -377,7 +377,7 @@ namespace RecipesWebApp.Data.Migrations
                     b.HasOne("RecipesWebApp.Data.Models.Contributor", "Contributor")
                         .WithMany("Recipes")
                         .HasForeignKey("ContributorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("RecipesWebApp.Data.Models.MealType", "MealType")
