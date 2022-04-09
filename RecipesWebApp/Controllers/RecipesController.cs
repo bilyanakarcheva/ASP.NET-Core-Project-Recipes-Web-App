@@ -7,7 +7,8 @@
     using System.Linq;
     using Data.Models;
     using RecipesWebApp.Services;
-    using RecipesWebApp.Services.Recipes;
+    using Microsoft.AspNetCore.Authorization;
+    using RecipesWebApp.Infrastructure;
 
     public class RecipesController : Controller
     {
@@ -20,16 +21,35 @@
             this.data = data;
         }
 
-        //HTTP GET - Visualizing the view
-        public IActionResult Add() => View(new AddRecipeFormModel
+        [Authorize]
+        public IActionResult Add()
         {
-            MealTypes = this.GetRecipeMealTypes()
-        });
+            if (!this.UserIsContributor())
+            {
+                return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
+            }
 
-        //HTTP POST - Recieves data from the form.
+            return View(new AddRecipeFormModel
+            {
+                MealTypes = this.GetRecipeMealTypes()
+            });
+        }
+
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddRecipeFormModel recipe)
         {
+            var contributorId = this.data
+                .Contributors
+                .Where(c => c.UserId == this.User.GetId())
+                .Select(c => c.Id)
+                .FirstOrDefault();
+
+            if (!this.UserIsContributor())
+            {
+                return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
+            }
+
             if (!this.data.MealTypes.Any(m => m.Id == recipe.MealTypeId))
             {
                 this.ModelState.AddModelError(nameof(recipe.MealTypeId), "Meal Type does not exist.");
@@ -50,7 +70,8 @@
                 Ingredients = recipe.Ingredients,
                 Instructions = recipe.Instructions,
                 ImageUrl = recipe.ImageUrl,
-                MealTypeId = recipe.MealTypeId
+                MealTypeId = recipe.MealTypeId,
+                ContributorId = contributorId
             };
 
             this.data.Recipes.Add(recipeData);
@@ -74,15 +95,25 @@
         }
 
         private IEnumerable<RecipeMealTypeViewModel> GetRecipeMealTypes()
-            => this.data
-                .MealTypes
-                .Select(t => new RecipeMealTypeViewModel
-                {
-                    Id = t.Id,
-                    Name = t.Name
-                })
-                .ToList();
+        {
+          return this.data
+                  .MealTypes
+                  .Select(t => new RecipeMealTypeViewModel
+                  {
+                      Id = t.Id,
+                      Name = t.Name
+                  })
+                  .ToList();
 
+        }
 
+        private bool UserIsContributor()
+        {
+            var userIsContributor = this.data
+                .Contributors
+                .Any(c => c.UserId == this.User.GetId());
+
+            return userIsContributor;
+        }
     }
 }

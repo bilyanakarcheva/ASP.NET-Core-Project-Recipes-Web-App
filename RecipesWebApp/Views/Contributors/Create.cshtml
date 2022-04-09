@@ -1,0 +1,30 @@
+﻿@model BecomeContributorFormModel
+
+@{
+    ViewData["Title"] = "Become a Contributor";
+}
+
+
+<div class="row">
+    <div class="offset-lg-2 col-md-6 col-sm-12">
+        <h1 class="pb-4 pt-4" align="center">@ViewData["Title"]</h1>
+        <form method="post">
+           <div class="form-group col-md-11 col-sm-6 m-4">
+               <div>
+                     <label asp-for="FirstName"></label>
+                     <input asp-for="FirstName" class="form-control" placeholder="Jane">
+                     <span asp-validation-for="FirstName" class="small text-danger"></span>
+
+                 </div>
+                 <div>
+                     <label asp-for="LastName"></label>
+                     <input asp-for="LastName" class="form-control" placeholder="Doe">
+                     <span asp-validation-for="LastName" class="small text-danger"></span>
+                  </div>
+                <div class="pt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+               </div> 
+            </div>
+        </form>
+    </div>
+</div>
