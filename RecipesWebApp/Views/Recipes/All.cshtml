@@ -1,7 +1,7 @@
 ﻿@model RecipeSearchQueryModel
 
 @{
-    ViewData["Title"] = "All Recipes - Tasty Bits";
+    ViewData["Title"] = "All Recipes";
 }
 
 @{
@@ -13,24 +13,8 @@
 
     var finalPage = Math.Ceiling((double)Model.TotalRecipes / RecipeSearchQueryModel.RecipesPerPage);
 
-
-
 }
 
-@if (!Model.Recipes.Any())
-{
-    <div class="jumbotron">
-        <h1 class="display-4">Welcome to Tasty Bits!</h1>
-        <p class="lead">Enjoy the best experience in the culinary world!</p>
-        <hr class="my-4">
-        <p>There are currently no recipes available. Would you like to add one?</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" asp-controller="Recipes" asp-action="Add" role="button">Add Recipe</a>
-        </p>
-    </div>
-}
-else
-{
     <div class="text-center">
         <h1 class="display-4 m-4">All Recipies</h1>
     </div>
@@ -55,20 +39,16 @@ else
         </div>
         
     </form>
-    <div  style="margin-left:60px">
-        @foreach (var recipe in Model.Recipes)
-        {
-            <div class="card inline-blocks" style="width: 18rem; display: inline-block; position:center; margin:12px"
-            margin-block: auto;>
-              <img class="card-img-top" src="@recipe.ImageUrl" alt="@recipe.Title">
-              <div class="card-body">
-                <h5 class="card-title">@recipe.Title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a asp-controller="Recipe" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary" style="cursor: pointer">Details</a>
-              </div>
-            </div>
-        }
-    </div>
+@if (!Model.Recipes.Any())
+{
+    <h2 class="text-center pt-5">No recipes found by the given criteria!</h2>
+
+}
+else
+{
+    <partial name="_RecipesPartial" model="@Model.Recipes"></partial>
+}
+
     <div class="row" style="margin-bottom:12px ">
         <div class="col-md-6">
             <a 
@@ -90,4 +70,4 @@ else
             asp-route-sorting="@((int)Model.Sorting)">>></a>
         </div>
     </div>
-}
+

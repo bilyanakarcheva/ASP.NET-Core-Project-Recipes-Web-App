@@ -1,0 +1,23 @@
+﻿@model IEnumerable<RecipeServiceModel>;
+
+@{
+    ViewData["Title"] = "My Recipes";
+}
+
+
+@if (!Model.Any())
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Tasty Bits!</h1>
+        <p class="lead">Enjoy the best experience in the culinary world!</p>
+        <hr class="my-4">
+        <p>There are currently no recipes available in My Recipes. Would you like to add one?</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" asp-controller="Recipes" asp-action="Add" role="button">Add Recipe</a>
+        </p>
+    </div>
+}
+else
+{
+    <partial name="_RecipesPartial" model="@Model"></partial>
+}

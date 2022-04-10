@@ -1,7 +1,9 @@
 ﻿namespace RecipesWebApp.Services.Recipes
 {
     using RecipesWebApp.Data;
+    using RecipesWebApp.Data.Models;
     using RecipesWebApp.Models.Recipes;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class RecipeService : IRecipeService
@@ -42,18 +44,9 @@
 
             var totalRecipes = recipeQuery.Count();
 
-            var recipes = recipeQuery
+            var recipes = GetRecipes(recipeQuery
                 .Skip((currentPage - 1) * recipesPerPage)
-                .Take(recipesPerPage)
-                .Select(r => new RecipeServiceModel
-                {
-                    Id = r.Id,
-                    Title = r.Title,
-                    CookingTime = r.CookingTime,
-                    ImageUrl = r.ImageUrl,
-                    MealTypeName = r.MealType.Name
-                })
-                .ToList();
+                .Take(recipesPerPage));
 
             return new RecipeQueryServiceModel
             {
@@ -62,5 +55,27 @@
                 Recipes = recipes
             };
         }
+
+        public IEnumerable<RecipeServiceModel> MyRecipes(string userId)
+        {
+            return this.GetRecipes(this.data
+                .Recipes
+                .Where(r => r.Contributor.UserId == userId));
+        }
+
+        public IEnumerable<RecipeServiceModel> GetRecipes(IQueryable<Recipe> recipeQuery)
+        {
+            return recipeQuery
+                    .Select(r => new RecipeServiceModel
+                    {
+                        Id = r.Id,
+                        Title = r.Title,
+                        CookingTime = r.CookingTime,
+                        ImageUrl = r.ImageUrl,
+                        MealTypeName = r.MealType.Name
+                    })
+                    .ToList();
+        }
+
     }
 }

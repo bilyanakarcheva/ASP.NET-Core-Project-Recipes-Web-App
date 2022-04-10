@@ -22,6 +22,14 @@
         }
 
         [Authorize]
+        public IActionResult MyRecipes()
+        {
+            var myRecipes = this.recipes.MyRecipes(this.User.GetId());
+
+            return View(myRecipes);
+        }
+
+        [Authorize]
         public IActionResult Add()
         {
             if (!this.UserIsContributor())
