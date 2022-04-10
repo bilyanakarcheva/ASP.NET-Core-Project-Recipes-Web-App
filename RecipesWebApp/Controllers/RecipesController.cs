@@ -9,16 +9,21 @@
     using RecipesWebApp.Services;
     using Microsoft.AspNetCore.Authorization;
     using RecipesWebApp.Infrastructure;
+    using RecipesWebApp.Services.Contributors;
 
     public class RecipesController : Controller
     {
         private readonly IRecipeService recipes;
+        private readonly IContributorService contributors;
         private readonly RecipesDbContext data;
 
-        public RecipesController(IRecipeService recipes, RecipesDbContext data)
+        public RecipesController(IRecipeService recipes, 
+            RecipesDbContext data, 
+            IContributorService contributors)
         {
             this.recipes = recipes;
             this.data = data;
+            this.contributors = contributors;
         }
 
         [Authorize]
@@ -32,7 +37,7 @@
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.UserIsContributor())
+            if (!this.contributors.IsContributor(this.User.GetId()))
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
@@ -115,13 +120,5 @@
 
         }
 
-        private bool UserIsContributor()
-        {
-            var userIsContributor = this.data
-                .Contributors
-                .Any(c => c.UserId == this.User.GetId());
-
-            return userIsContributor;
-        }
     }
 }
