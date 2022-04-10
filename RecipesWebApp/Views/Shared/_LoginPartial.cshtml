@@ -1,16 +1,29 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using RecipesWebApp.Services.Contributors
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IContributorService Contributors
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
-{
-   <li class="nav-item">
-       <a  class="nav-link text-dark" asp-area="Identity" asp-controller="Contributors" asp-action="Create">Become Contributor</a>
-   </li>
+{ 
+    var userId = User.GetId();
+    var isIsContributor = Contributors.IsContributor(userId); 
 
+    @if (isIsContributor)
+   {
+       <li class="nav-item">
+           <a class="nav-link text-dark" asp-area="Identity" asp-controller="Recipes" asp-action="MyRecipes">My Recipes</a>
+       </li>
+   }
+   else
+   {
+       <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-controller="Contributors" asp-action="Create">Become Contributor</a>
+       </li>
+   }
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Email" title="Manage">Profile</a>
     </li>
    <!-- <li class="nav-item">
         <h6  class="nav-link text-dark text-lg-left">Hello @User.Identity.Name!</h6>
