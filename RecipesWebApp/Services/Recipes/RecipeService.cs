@@ -56,6 +56,57 @@
             };
         }
 
+        public RecipeDetailsServiceModel Details(int recipeId)
+        {
+            return this.data
+                .Recipes
+                .Where(r => r.Id == recipeId)
+                .Select(r => new RecipeDetailsServiceModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    CookingTime = r.CookingTime,
+                    Ingredients = r.Ingredients,
+                    Instructions = r.Instructions,
+                    ImageUrl = r.ImageUrl,
+                    MealTypeName = r.MealType.Name,
+                    ContributorId = r.ContributorId,
+                    FirstName = r.Contributor.FirstName,
+                    LastName = r.Contributor.LastName,
+                    UserId = r.Contributor.UserId
+                })
+                .FirstOrDefault();
+
+        }
+
+        public int Create(
+            string title,
+            string cookingTime,
+            int portions,
+            string ingredients,
+            string instructions,
+            string imageUrl,
+            int mealTypeId,
+            int contributorId)
+        {
+            var recipeData = new Recipe
+            {
+                Title = title,
+                CookingTime = cookingTime,
+                Portions = portions,
+                Ingredients = ingredients,
+                Instructions = instructions,
+                ImageUrl = imageUrl,
+                MealTypeId = mealTypeId,
+                ContributorId = contributorId
+            };
+
+            this.data.Recipes.Add(recipeData);
+            this.data.SaveChanges();
+
+            return recipeData.Id;
+        }
+
         public IEnumerable<RecipeServiceModel> MyRecipes(string userId)
         {
             return this.GetRecipes(this.data
@@ -77,5 +128,23 @@
                     .ToList();
         }
 
+        public IEnumerable<RecipeMealTypeServiceModel> GetMealTypes()
+        {
+            return this.data
+                .MealTypes
+                .Select(t => new RecipeMealTypeServiceModel
+                {
+                    Id = t.Id,
+                    Name = t.Name
+                })
+                .ToList();
+        }
+
+        public bool MealTypeExists(int mealTypeId)
+        {
+            return this.data
+                .MealTypes
+                .Any(m => m.Id == mealTypeId);
+        }
     }
 }

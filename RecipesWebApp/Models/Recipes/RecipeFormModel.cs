@@ -1,10 +1,11 @@
 ﻿namespace RecipesWebApp.Models.Recipes
 {
+    using RecipesWebApp.Services.Recipes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using static Data.DataConstants.Recipe;
 
-    public class AddRecipeFormModel
+    public class RecipeFormModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = "{0} must be between {2} and {1} characters.")]
@@ -39,6 +40,6 @@
         [Display(Name = "Meal Type")]
         public int MealTypeId { get; init; }
 
-        public IEnumerable<RecipeMealTypeViewModel> MealTypes { get; set; }
+        public IEnumerable<RecipeMealTypeServiceModel> MealTypes { get; set; }
     }
 }

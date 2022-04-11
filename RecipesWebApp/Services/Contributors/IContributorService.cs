@@ -2,6 +2,8 @@
 {
     public interface IContributorService
     {
-        public bool IsContributor(string userId);
+        public bool UserIsContributor(string userId);
+
+        public int GetContributorId(string userId);
     }
 }

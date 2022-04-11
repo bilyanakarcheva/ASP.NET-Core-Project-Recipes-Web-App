@@ -12,11 +12,19 @@
             this.data = data;
         }
 
-        public bool IsContributor(string userId)
-        {
+        public bool UserIsContributor(string userId){
             return this.data
                     .Contributors
                     .Any(c => c.UserId == userId);
+        }
+
+        public int GetContributorId(string userId)
+        {
+            return this.data
+                .Contributors
+                .Where(c => c.UserId == userId)
+                .Select(c => c.Id)
+                .FirstOrDefault();
         }
     }
 }

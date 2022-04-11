@@ -6,6 +6,7 @@
     public class RecipeQueryServiceModel
     {
         public int CurrentPage { get; init; }
+
         public int RecipesPerPage { get; init; }
 
         public int TotalRecipes { get; set; }

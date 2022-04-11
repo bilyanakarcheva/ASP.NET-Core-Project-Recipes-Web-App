@@ -1,0 +1,57 @@
+﻿@model RecipeFormModel
+
+<div class="row">
+    <div class="offset-md-2 col-md-9 col-sm-12">
+        <h1 align="center">Add a Recipe</h1>
+        <form method="post">
+          <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" placeholder="Chicken noodle soup, etc.">
+            <span asp-validation-for="Title" class="small text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Ingredients"></label>
+            <textarea asp-for="Ingredients" rows="3" class="form-control" placeholder="1. Shallots - 250 gr.
+2. Chicken breasts - 500 gr.
+etc."></textarea>
+             <span asp-validation-for="Ingredients" class="small text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Instructions"></label>
+            <textarea asp-for="Instructions" rows="7" class="form-control" placeholder="1.Peel and finely slice the shallots.
+
+2. Place a large pan over a medium–low heat.
+
+3. Add the chicken with 1 tablespoon of sesame oil.
+
+etc."></textarea>
+          <span asp-validation-for="Instructions" class="small text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="ImageUrl"></label>
+            <input asp-for="ImageUrl" class="form-control" placeholder="Paste URL here...">
+            <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="MealTypeId"></label>
+            <select asp-for="MealTypeId" class="form-control">
+                    @foreach (var mealType in Model.MealTypes)
+                    {
+                        <option value="@mealType.Id">@mealType.Name</option>
+                    }
+                </select>
+          </div>
+          <div class="form-group">
+            <label asp-for="CookingTime"></label>
+            <input asp-for="CookingTime" class="form-control" placeholder="1hr 30mins">
+            <span asp-validation-for="CookingTime" class="small text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Portions"></label>
+            <input asp-for="Portions" class="form-control" placeholder="1-10">
+            <span asp-validation-for="Portions" class="small text-danger"></span>
+          </div>
+          <input class="btn btn-primary mt-3" type="submit" value="Save"/>
+        </form>
+    </div>
+</div>

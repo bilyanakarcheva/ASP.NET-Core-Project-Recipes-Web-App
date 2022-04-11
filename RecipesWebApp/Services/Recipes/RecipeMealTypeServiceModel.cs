@@ -1,6 +1,6 @@
-﻿namespace RecipesWebApp.Models.Recipes
+﻿namespace RecipesWebApp.Services.Recipes
 {
-    public class RecipeMealTypeViewModel
+    public class RecipeMealTypeServiceModel
     {
         public int Id { get; init; }
 
