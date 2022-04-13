@@ -107,11 +107,49 @@
             return recipeData.Id;
         }
 
+
+        public bool Edit(
+            int recipeId,
+            string title,
+            string cookingTime,
+            int portions,
+            string ingredients,
+            string instructions,
+            string imageUrl,
+            int mealTypeId)
+        {
+            var recipeData = this.data.Recipes.Find(recipeId);
+
+            if (recipeData == null)
+            {
+                return false;
+            }
+
+            recipeData.Title = title;
+            recipeData.CookingTime = cookingTime;
+            recipeData.Portions = portions;
+            recipeData.Ingredients = ingredients;
+            recipeData.Instructions = instructions;
+            recipeData.ImageUrl = imageUrl;
+            recipeData.MealTypeId = mealTypeId;
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
         public IEnumerable<RecipeServiceModel> MyRecipes(string userId)
         {
             return this.GetRecipes(this.data
                 .Recipes
                 .Where(r => r.Contributor.UserId == userId));
+        }
+
+        public bool recipeIsByContributor(int recipeId, int contributorId)
+        {
+            return this.data
+                .Recipes
+                .All(r => r.Id == recipeId && r.Contributor.Id == contributorId);
         }
 
         public IEnumerable<RecipeServiceModel> GetRecipes(IQueryable<Recipe> recipeQuery)

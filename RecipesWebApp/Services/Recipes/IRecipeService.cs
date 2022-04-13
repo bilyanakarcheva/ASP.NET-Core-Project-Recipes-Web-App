@@ -23,10 +23,21 @@
                 int mealTypeId,
                 int contributorId);
 
+        bool Edit(
+            int id,
+            string title,
+            string cookingTime,
+            int portions,
+            string ingredients,
+            string instructions,
+            string imageUrl,
+            int mealTypeId);
+
         IEnumerable<RecipeServiceModel> MyRecipes(string userId);
 
         IEnumerable<RecipeMealTypeServiceModel> GetMealTypes();
 
         bool MealTypeExists(int mealTypeId);
+        bool recipeIsByContributor(int recipeId, int contributorId);
     }
 }
