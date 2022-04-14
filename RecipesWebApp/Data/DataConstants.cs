@@ -29,6 +29,10 @@
 
         }
 
-
+        public class User
+        {
+            public const int PasswordMinLength = 6;
+            public const int PasswordMaxLength = 100;
+        }
     }
 }

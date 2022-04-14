@@ -1,7 +1,7 @@
 ﻿@model RecipeSearchQueryModel
 
 @{
-    ViewData["Title"] = "All Recipes";
+    ViewBag.Title = "All Recipes";
 }
 
 @{
@@ -15,7 +15,7 @@
 
 }
     <div class="text-center">
-        <h1 class="display-4 m-4">All Recipies</h1>
+        <h2 class="display-4 m-4">@ViewBag.Title</h2>
     </div>
     <form method="get" class="m-4">
         <div class="row">

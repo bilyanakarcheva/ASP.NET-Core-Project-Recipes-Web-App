@@ -31,7 +31,7 @@
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.contributors.UserIsContributor(this.User.GetId()))
+            if (!this.contributors.UserIsContributor(this.User.GetId()) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
@@ -48,7 +48,7 @@
         {
             var contributorId = this.contributors.GetContributorId(this.User.GetId());
 
-            if (!this.contributors.UserIsContributor(this.User.GetId()))
+            if (!this.contributors.UserIsContributor(this.User.GetId()) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
@@ -97,14 +97,14 @@
         {
             var userId = this.User.GetId();
 
-            if (!this.contributors.UserIsContributor(userId))
+            if (!this.contributors.UserIsContributor(userId) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
 
             var recipe = this.recipes.Details(id);
 
-            if (recipe.UserId != userId)
+            if (recipe.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -128,7 +128,7 @@
         {
             var contributorId = this.contributors.GetContributorId(this.User.GetId());
 
-            if (!this.contributors.UserIsContributor(this.User.GetId()))
+            if (contributorId == 0 && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
@@ -145,7 +145,7 @@
                 return View(recipe);
             }
 
-            if (!this.recipes.recipeIsByContributor(id, contributorId))
+            if (!this.recipes.recipeIsByContributor(id, contributorId) && !User.IsAdmin())
             {
                 return BadRequest();
             }

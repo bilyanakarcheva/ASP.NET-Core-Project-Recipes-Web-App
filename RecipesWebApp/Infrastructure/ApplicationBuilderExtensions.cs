@@ -1,58 +1,46 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using RecipesWebApp.Data;
-using RecipesWebApp.Data.Models;
-using System;
-using System.Linq;
-
-namespace RecipesWebApp.Infrastructure
+﻿namespace RecipesWebApp.Infrastructure
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using RecipesWebApp.Data;
+    using RecipesWebApp.Data.Models;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using static WebConstants;
+
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder PrepareDatabase(
             this IApplicationBuilder app)
         {
-            using var scopedServices = app.ApplicationServices.CreateScope();
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var services = serviceScope.ServiceProvider;
 
-            var data = scopedServices.ServiceProvider.GetService<RecipesDbContext>();
+            MigrateDatabase(services);
 
-            //Console.WriteLine(data.Database.EnsureDeleted());
+            SeedMealTypes(services);
 
-            //data.Database.EnsureCreated();
-
-            data.Database.Migrate();
-
-            SeedMealTypes(data);
-
-            //SeedPortions();
+            SeedAministrator(services);
 
             return app;
         }
 
-        //private static void SeedPortions(RecipesDbContext data)
-        //{
-        //    if (data.Portions.Any())
-        //    {
-        //        return;
-        //    }
-
-        //    data.Portions.AddRange(new[]
-        //    {
-        //        new MealType { Name = "1" },
-        //        new MealType { Name = "2" },
-        //        new MealType { Name = "3" },
-        //        new MealType { Name = "4" },
-        //        new MealType { Name = "5" },
-        //        new MealType { Name = "6" },
-        //        new MealType { Name = "7" },
-        //    });
-
-        //    data.SaveChanges();
-        //}
-
-        private static void SeedMealTypes(RecipesDbContext data)
+        private static void MigrateDatabase(IServiceProvider services)
         {
+
+            var data = services.GetRequiredService<RecipesDbContext>();
+
+            data.Database.Migrate();
+        }
+
+        private static void SeedMealTypes(IServiceProvider services)
+        {
+            var data = services.GetRequiredService<RecipesDbContext>();
+
             if (data.MealTypes.Any())
             {
                 return;
@@ -67,6 +55,41 @@ namespace RecipesWebApp.Infrastructure
             });
 
             data.SaveChanges();
+        }
+
+        private static void SeedAministrator(
+            IServiceProvider services)
+        {
+            var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+
+            Task.Run(async () =>
+                {
+                    if (await roleManager.RoleExistsAsync(AministratorRoleName))
+                    {
+                        return;
+                    }
+
+                    var role = new IdentityRole { Name = AministratorRoleName };
+
+                    await roleManager.CreateAsync(role);
+
+                    const string adminCredentials = "admin@tastybits.com";
+                    const string adminPassword = "adminPass123";
+
+                    var user = new IdentityUser
+                    {
+                        Email = adminCredentials,
+                        UserName = adminCredentials
+                    };
+
+                    await userManager.CreateAsync(user, adminPassword);
+
+                    await userManager.AddToRoleAsync(user, role.Name);
+                })
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }

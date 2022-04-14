@@ -8,15 +8,16 @@
 @if (SignInManager.IsSignedIn(User))
 { 
     var userId = User.GetId();
-    var isIsContributor = Contributors.UserIsContributor(userId); 
+        var userIsContributor = Contributors.UserIsContributor(userId);
+        var userIsAdmin = User.IsAdmin();
 
-    @if (isIsContributor)
+    @if (userIsContributor && !userIsAdmin)
    {
        <li class="nav-item">
            <a class="nav-link text-dark" asp-area="Identity" asp-controller="Recipes" asp-action="MyRecipes">My Recipes</a>
        </li>
    }
-   else
+   else if (!userIsAdmin)
    {
        <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-controller="Contributors" asp-action="Create">Become Contributor</a>

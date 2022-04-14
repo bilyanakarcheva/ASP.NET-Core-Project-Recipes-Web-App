@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
+﻿
 namespace RecipesWebApp.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ContributorsTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

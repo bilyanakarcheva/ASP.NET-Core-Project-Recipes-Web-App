@@ -9,7 +9,7 @@
           <div class="card-body">
             <h5 class="card-title">@recipe.Title</h5>
             <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary" style="cursor: pointer">Details</a>
-            @if (ViewBag.AllowEdit == true)
+            @if (ViewBag.AllowEdit == true || User.IsAdmin())
            {
                 <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@recipe.Id" class="btn btn-outline-primary m-2" style="cursor: pointer">Edit</a>
                 <a asp-controller="Recipes" asp-action="Delete" asp-route-id="@recipe.Id" class="btn btn-danger" style="cursor: pointer">Delete</a>

@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace RecipesWebApp.Data.Migrations
+﻿namespace RecipesWebApp.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class Removed_table_Ingredients : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
