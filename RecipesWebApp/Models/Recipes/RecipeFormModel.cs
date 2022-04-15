@@ -3,6 +3,7 @@
     using RecipesWebApp.Services.Recipes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using static Data.DataConstants.Recipe;
 
     public class RecipeFormModel
@@ -19,8 +20,9 @@
         [Display(Name = "Cooking Time")]
         public string CookingTime { get; init; }
 
+        [Required]
         [Range(PortionsMinRange, PortionsMaxRange)]
-        public int Portions { get; init; }
+        public int Portions { get; set; }
 
         [Required]
         [StringLength(int.MaxValue, MinimumLength = InstructionsMinLength, ErrorMessage = "{0} must be at least {2} characters.")]

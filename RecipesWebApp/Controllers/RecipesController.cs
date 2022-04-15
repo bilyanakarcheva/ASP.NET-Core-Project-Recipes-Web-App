@@ -28,6 +28,32 @@
             return View(myRecipes);
         }
 
+        public IActionResult AllSoups()
+        {
+            int mealTypeId = 1;
+            var soups = this.recipes.RecipesByMealType(mealTypeId);
+
+            return View(soups);
+        }
+
+        [Authorize]
+        public IActionResult Details(int id)
+        {
+
+            var recipe = this.recipes.Details(id);
+
+            return View(new RecipeFormModel
+            {
+                Title = recipe.Title,
+                CookingTime = recipe.CookingTime,
+                Portions = recipe.Portions,
+                Ingredients = recipe.Ingredients,
+                Instructions = recipe.Instructions,
+                ImageUrl = recipe.ImageUrl,
+                MealTypeId = recipe.MealTypeId,
+            });
+        }
+
         [Authorize]
         public IActionResult Add()
         {
@@ -145,7 +171,7 @@
                 return View(recipe);
             }
 
-            if (!this.recipes.recipeIsByContributor(id, contributorId) && !User.IsAdmin())
+            if (!this.recipes.RecipeIsByContributor(id, contributorId) && !User.IsAdmin())
             {
                 return BadRequest();
             }
@@ -162,5 +188,7 @@
 
             return RedirectToAction(nameof(MyRecipes));
         }
+
+
     }
 }

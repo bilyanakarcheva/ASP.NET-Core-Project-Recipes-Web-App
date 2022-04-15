@@ -10,8 +10,8 @@ namespace RecipesWebApp
     using Microsoft.Extensions.Hosting;
     using RecipesWebApp.Data;
     using RecipesWebApp.Infrastructure;
-    using RecipesWebApp.Services;
     using RecipesWebApp.Services.Contributors;
+    using RecipesWebApp.Services.MealTypes;
     using RecipesWebApp.Services.Recipes;
     using RecipesWebApp.Services.Statistics;
 
@@ -52,6 +52,7 @@ namespace RecipesWebApp
             services.AddTransient<IRecipeService, RecipeService>();
             services.AddTransient<IContributorService, ContributorService>();
             services.AddTransient<IStatisticsService, StatisticsSevice>();
+            services.AddTransient<IMealTypesService, MealTypesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

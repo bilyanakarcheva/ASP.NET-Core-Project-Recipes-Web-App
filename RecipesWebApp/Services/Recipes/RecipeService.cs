@@ -11,7 +11,9 @@
         private readonly RecipesDbContext data;
 
         public RecipeService(RecipesDbContext data)
-            => this.data = data;
+        {
+            this.data = data;
+        }
 
         public RecipeQueryServiceModel All(
             string searchWord,
@@ -52,7 +54,8 @@
             {
                 CurrentPage = currentPage,
                 RecipesPerPage = recipesPerPage,
-                Recipes = recipes
+                Recipes = recipes,
+                TotalRecipes = totalRecipes
             };
         }
 
@@ -69,6 +72,7 @@
                     Ingredients = r.Ingredients,
                     Instructions = r.Instructions,
                     ImageUrl = r.ImageUrl,
+                    Portions = r.Portions,
                     MealTypeName = r.MealType.Name,
                     ContributorId = r.ContributorId,
                     FirstName = r.Contributor.FirstName,
@@ -145,11 +149,13 @@
                 .Where(r => r.Contributor.UserId == userId));
         }
 
-        public bool recipeIsByContributor(int recipeId, int contributorId)
+        public bool RecipeIsByContributor(int recipeId, int contributorId)
         {
-            return this.data
+            var isContributor = this.data
                 .Recipes
-                .All(r => r.Id == recipeId && r.Contributor.Id == contributorId);
+                .Any(r => r.Id == recipeId && r.ContributorId == contributorId);
+
+            return isContributor;
         }
 
         public IEnumerable<RecipeServiceModel> GetRecipes(IQueryable<Recipe> recipeQuery)
@@ -176,6 +182,13 @@
                     Name = t.Name
                 })
                 .ToList();
+        }
+
+        public IEnumerable<RecipeServiceModel> RecipesByMealType(int mealTypeId)
+        {
+            return this.GetRecipes(this.data
+                .Recipes
+                .Where(r => r.MealTypeId == mealTypeId));
         }
 
         public bool MealTypeExists(int mealTypeId)

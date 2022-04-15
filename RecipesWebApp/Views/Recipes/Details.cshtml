@@ -1,0 +1,29 @@
+﻿@model RecipeFormModel
+
+@{
+    ViewBag.Title = "Recipe Details";
+}
+
+
+<div class="jumbotron">
+    <div class="display-4 text-center mb-5 mt-1">
+        <h1 class="display-4 text-center mb-5">@Model.Title</h1>
+        <img class="img-fluid" src="@Model.ImageUrl" alt="@Model.Title"></>
+    </div>
+    <div>
+        <h1 class="display-5">Ingredients:</h1>
+        <p class="lead">@Model.Ingredients</p>
+    </div>
+    <div>
+        <h1 class="display-5">Instructions:</h1>
+        <p class="lead">@Model.Instructions</p>
+    </div>
+    <div>
+        <h1 class="display-5">Cooking Time:</h1>
+        <p class="lead">@Model.CookingTime</p>
+    </div>
+    <div>
+        <h1 class="display-5">Portions:</h1>
+        <p class="lead">@Model.Portions</p>
+    </div>
+</div> 

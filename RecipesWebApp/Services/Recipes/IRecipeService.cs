@@ -35,9 +35,12 @@
 
         IEnumerable<RecipeServiceModel> MyRecipes(string userId);
 
+        IEnumerable<RecipeServiceModel> RecipesByMealType(int mealTypeId);
+
+
         IEnumerable<RecipeMealTypeServiceModel> GetMealTypes();
 
         bool MealTypeExists(int mealTypeId);
-        bool recipeIsByContributor(int recipeId, int contributorId);
+        bool RecipeIsByContributor(int recipeId, int contributorId);
     }
 }

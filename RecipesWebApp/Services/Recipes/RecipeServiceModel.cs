@@ -11,7 +11,5 @@
         public string ImageUrl { get; set; }
 
         public string MealTypeName { get; init; }
-
-        public int TotalRecipes { get; init; }
     }
 }

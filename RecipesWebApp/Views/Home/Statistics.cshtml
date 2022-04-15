@@ -1,0 +1,23 @@
+﻿@model StatisticsServiceModel
+
+
+@{
+    ViewBag.Title = "Statistics";
+}
+<h1 class="mb-5 mt-4">@ViewBag.Title</h1>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h6 class="display-4">Recipes: @Model.TotalRecipes</h6>
+  </div>
+</div>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h6 class="display-4">Users: @Model.TotalUsers</h6>
+  </div>
+</div>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h6 class="display-4">Contributors: @Model.TotalContributors</h6>
+  </div>
+</div>
