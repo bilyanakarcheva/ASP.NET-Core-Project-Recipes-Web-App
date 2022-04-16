@@ -48,10 +48,10 @@
 
             data.MealTypes.AddRange(new[]
             {
-                new MealType { Name = "Soup" },
-                new MealType { Name = "Dessert" },
-                new MealType { Name = "Main Course" },
-                new MealType { Name = "Salad" },
+                new MealType { Name = "Soups" },
+                new MealType { Name = "Desserts" },
+                new MealType { Name = "Main Courses" },
+                new MealType { Name = "Salads" },
             });
 
             data.SaveChanges();

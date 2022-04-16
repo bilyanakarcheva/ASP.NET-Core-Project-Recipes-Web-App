@@ -22,6 +22,18 @@
                 .Where(r => r.MealTypeId == mealTypeId));
         }
 
+        public int GetMealTypeId(string mealTypeName)
+        {
+             var mealType = this.data
+                .MealTypes
+                .Where(m => m.Name == mealTypeName)
+                .FirstOrDefault();
+
+            var mealtypeId = mealType.Id;
+
+            return mealtypeId;
+        }
+
         public IEnumerable<RecipeServiceModel> GetRecipes(IQueryable<Recipe> recipeQuery)
         {
 

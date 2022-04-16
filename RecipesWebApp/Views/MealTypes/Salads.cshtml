@@ -1,0 +1,19 @@
+﻿ @model IEnumerable<RecipeServiceModel>
+
+@{
+    ViewBag.Title = "Salads";
+}   
+
+
+@if (!Model.Any())
+{
+    <partial name="_EmptyRecipeListPartial" />
+}
+else
+{
+    <div class="text-center">
+            <h2 class="display-4 m-4">@ViewBag.Title</h2>
+    </div>
+
+    <partial name="_RecipesPartial" model="@Model"></partial>
+}

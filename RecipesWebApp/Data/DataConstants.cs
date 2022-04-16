@@ -5,11 +5,10 @@
         public class Recipe
         {
             public const int NameMinLength = 2;
-            public const int NameMaxLength = 30;
+            public const int NameMaxLength = 100;
             public const int PortionsMinRange = 1;
-            public const int PortionsMaxRange = 10;
-            //public const int IngredientQuantityMaxLength = 20;
-            public const int DescriptionMinLength = 20;
+            public const int PortionsMaxRange = 20;
+            public const int DescriptionMinLength = 10;
             public const int InstructionsMinLength = 5;
             public const int CookingTimeMinLength = 2;
             public const int CookingTimeMaxLength = 20;

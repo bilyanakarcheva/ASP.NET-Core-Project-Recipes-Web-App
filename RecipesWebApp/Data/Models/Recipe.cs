@@ -13,12 +13,11 @@
         [MaxLength(NameMaxLength)]
         public string Title { get; set; }
 
-        //Check format later on!! Drop down - hours and minites
         [Required]
         [MaxLength(CookingTimeMaxLength)]
         public string CookingTime { get; set; }
 
-        //Dropdown - 1 to 10
+        //Dropdown - 1 to 20
         [Required]
         [Range(PortionsMinRange, PortionsMaxRange)]
         public int Portions { get; set; }
@@ -44,11 +43,6 @@
 
         public Contributor Contributor { get; init; }
 
-        //public int IngredientId { get; set; }
-
-
-        //How to add them?
-        //public IEnumerable<Ingredient> Ingredients { get; set; }
     }
 
 }

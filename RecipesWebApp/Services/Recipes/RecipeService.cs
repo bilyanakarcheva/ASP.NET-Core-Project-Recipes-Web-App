@@ -142,6 +142,22 @@
             return true;
         }
 
+        public bool Delete(int recipeId)
+        {
+            var recipeData = this.data.Recipes.Find(recipeId);
+
+            if (recipeData == null)
+            {
+                return false;
+            }
+
+            this.data.Recipes.Remove(recipeData);
+
+            this.data.SaveChanges();
+
+            return true;
+        }
+
         public IEnumerable<RecipeServiceModel> MyRecipes(string userId)
         {
             return this.GetRecipes(this.data

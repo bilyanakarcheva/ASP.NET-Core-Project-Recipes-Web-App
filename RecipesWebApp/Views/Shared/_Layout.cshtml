@@ -28,10 +28,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="All">All Recipes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Statistics">Statistics</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MealTypes" asp-action="Soups">Soups</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Recipes" asp-action="AllSoups">Soups</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MealTypes" asp-action="Salads">Salads</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MealTypes" asp-action="MainCourses">Main Courses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MealTypes" asp-action="Desserts">Desserts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Statistics">Statistics</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -47,7 +56,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.UtcNow.Year - Tasty Bits - <a asp-area="" asp-controller="Home" asp-action="Statistics">Web Site Statistics</a>
+            &copy; @DateTime.UtcNow.Year - Tasty Bits - <a asp-area="" asp-controller="Home" asp-action="Statistics">Website Statistics</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

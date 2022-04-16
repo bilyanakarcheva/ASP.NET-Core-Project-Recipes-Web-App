@@ -28,14 +28,6 @@
             return View(myRecipes);
         }
 
-        public IActionResult AllSoups()
-        {
-            int mealTypeId = 1;
-            var soups = this.recipes.RecipesByMealType(mealTypeId);
-
-            return View(soups);
-        }
-
         [Authorize]
         public IActionResult Details(int id)
         {
@@ -189,6 +181,12 @@
             return RedirectToAction(nameof(MyRecipes));
         }
 
+        public IActionResult Delete(int id)
+        {
+            this.recipes.Delete(id);
+
+            return RedirectToAction(nameof(MyRecipes));
+        }
 
     }
 }

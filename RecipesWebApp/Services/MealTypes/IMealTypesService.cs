@@ -9,6 +9,8 @@
     {
         public IEnumerable<RecipeServiceModel> RecipesByMealType(int mealTypeId);
 
+        public int GetMealTypeId(string mealTypeName);
+
         public IEnumerable<RecipeServiceModel> GetRecipes(IQueryable<Recipe> recipeQuery);
     }
 }

@@ -33,6 +33,8 @@
             string imageUrl,
             int mealTypeId);
 
+        bool Delete(int id);
+
         IEnumerable<RecipeServiceModel> MyRecipes(string userId);
 
         IEnumerable<RecipeServiceModel> RecipesByMealType(int mealTypeId);

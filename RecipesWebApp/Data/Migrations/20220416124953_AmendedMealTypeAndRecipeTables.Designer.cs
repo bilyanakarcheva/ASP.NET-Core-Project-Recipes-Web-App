@@ -3,15 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RecipesWebApp.Data;
+using Microsoft.EntityFrameworkCore.Migrations;
+
 
 namespace RecipesWebApp.Data.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220416124953_AmendedMealTypeAndRecipeTables2")]
+    partial class AmendedMealTypeAndRecipeTables2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

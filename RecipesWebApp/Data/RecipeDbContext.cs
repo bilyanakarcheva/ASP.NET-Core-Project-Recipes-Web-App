@@ -14,8 +14,6 @@
 
         public DbSet<Recipe> Recipes { get; init; }
 
-        // DbSet<Ingredient> Ingredients { get; init; }
-
         public DbSet<MealType> MealTypes { get; init; }
 
         public DbSet<Contributor> Contributors { get; init; }

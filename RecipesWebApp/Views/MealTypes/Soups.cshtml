@@ -1,9 +1,8 @@
-﻿@model IEnumerable<RecipeServiceModel>;
+﻿ @model IEnumerable<RecipeServiceModel>
 
 @{
-    ViewBag.Title = "My Recipes";
-    ViewBag.AllowEdit = true;
-}
+    ViewBag.Title = "Soups";
+}   
 
 
 @if (!Model.Any())
@@ -13,9 +12,8 @@
 else
 {
     <div class="text-center">
-        <h2 class="display-4 m-4">My Recipies</h2>
+            <h2 class="display-4 m-4">@ViewBag.Title</h2>
     </div>
+
     <partial name="_RecipesPartial" model="@Model"></partial>
 }
-
-

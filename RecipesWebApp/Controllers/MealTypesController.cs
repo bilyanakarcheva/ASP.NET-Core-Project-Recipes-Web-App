@@ -3,36 +3,46 @@
     using Microsoft.AspNetCore.Mvc;
     using RecipesWebApp.Data;
     using RecipesWebApp.Services.MealTypes;
+    using RecipesWebApp.Services.Recipes;
 
     public class MealTypesController : Controller
     {
-        private readonly MealTypesService recipes;
-        private readonly RecipesDbContext data;
+        private readonly IMealTypesService mealTypes;
+        private readonly IRecipeService recipes;
 
 
-        public MealTypesController(MealTypesService recipes)
+        public MealTypesController(IMealTypesService mealTypes)
         {
-            this.recipes = recipes;  
+            this.mealTypes = mealTypes;  
         }
 
-        public IActionResult AllSoups()
+        public IActionResult Soups()
         {
-            int mealTypeId = 1;
-            var soups = this.recipes.RecipesByMealType(mealTypeId);
+            int mealTypeId = this.mealTypes.GetMealTypeId(nameof(Soups));
+            var soups = this.mealTypes.RecipesByMealType(mealTypeId);
 
             return View(soups);
         }
-        public IActionResult AllSalads()
+        public IActionResult Salads()
         {
-            return View();
+            int mealTypeId = this.mealTypes.GetMealTypeId(nameof(Salads));
+            var salads = this.mealTypes.RecipesByMealType(mealTypeId);
+
+            return View(salads);
         }
-        public IActionResult AllMainCourses()
+        public IActionResult MainCourses()
         {
-            return View();
+            int mealTypeId = this.mealTypes.GetMealTypeId("Main Courses");
+            var mainCourse = this.mealTypes.RecipesByMealType(mealTypeId);
+
+            return View(mainCourse);
         }
-        public IActionResult AllDesserts()
+        public IActionResult Desserts()
         {
-            return View();
+            int mealTypeId = this.mealTypes.GetMealTypeId(nameof(Desserts));
+            var dessert = this.mealTypes.RecipesByMealType(mealTypeId);
+
+            return View(dessert);
         }
     }
 }
