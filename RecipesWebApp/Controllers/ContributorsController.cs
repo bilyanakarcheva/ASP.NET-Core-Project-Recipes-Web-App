@@ -2,19 +2,17 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using RecipesWebApp.Data;
-    using RecipesWebApp.Data.Models;
-    using RecipesWebApp.Infrastructure;
     using RecipesWebApp.Models.Contributors;
-    using System.Linq;
+    using RecipesWebApp.Infrastructure;
+    using RecipesWebApp.Services.Contributors;
 
     public class ContributorsController : Controller
     {
-        private readonly RecipesDbContext data;
+        private readonly IContributorService contributors;
 
-        public ContributorsController(RecipesDbContext data)
+        public ContributorsController(IContributorService contributors)
         {
-            this.data = data;
+            this.contributors = contributors;
         }
 
         [Authorize]
@@ -29,11 +27,7 @@
         {
             var userId = this.User.GetId();
 
-            var userIsAlreadyContributor = this.data
-                .Contributors
-                .Any(c => c.UserId == userId);
-
-            if (userIsAlreadyContributor)
+            if (contributors.UserIsContributor(userId))
             {
                 return BadRequest();
             }
@@ -43,15 +37,10 @@
                 return View(contributor);
             }
 
-            var contributorData = new Contributor
-            {
-                UserId = userId,
-                FirstName = contributor.FirstName,
-                LastName = contributor.LastName
-            };
-
-            this.data.Contributors.Add(contributorData);
-            this.data.SaveChanges();
+            this.contributors.CreateContributor(
+                userId,
+                contributor.FirstName,
+                contributor.LastName);
 
             return RedirectToAction("Index", "Home");
         }
