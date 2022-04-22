@@ -1,8 +1,10 @@
 ﻿namespace RecipesWebApp.Services.Contributors
 {
+    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
+    using System.Linq;
     using RecipesWebApp.Data;
     using RecipesWebApp.Data.Models;
-    using System.Linq;
 
     public class ContributorService : IContributorService
     {
@@ -13,22 +15,22 @@
             this.data = data;
         }
 
-        public bool UserIsContributor(string userId){
-            return this.data
+        public async Task<bool> UserIsContributor(string userId){
+            return await this.data
                     .Contributors
-                    .Any(c => c.UserId == userId);
+                    .AnyAsync(c => c.UserId == userId);
         }
 
-        public int GetContributorId(string userId)
+        public async Task<int> GetContributorId(string userId)
         {
-            return this.data
+            return await this.data
                 .Contributors
                 .Where(c => c.UserId == userId)
                 .Select(c => c.Id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public void CreateContributor(
+        public async void CreateContributor(
             string userId,
             string firstName,
             string lastName)
@@ -40,14 +42,9 @@
                 LastName = lastName
             };
 
-            this.data.Contributors.Add(contributorData);
-            this.data.SaveChanges();
+            await this.data.Contributors.AddAsync(contributorData);
+            await this.data.SaveChangesAsync();
 
-        }
-
-        public void CreateContributor(string userId)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

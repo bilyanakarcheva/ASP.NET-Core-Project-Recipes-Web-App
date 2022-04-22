@@ -1,14 +1,11 @@
 ﻿namespace RecipesWebApp.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using RecipesWebApp.Data;
     using RecipesWebApp.Services.MealTypes;
-    using RecipesWebApp.Services.Recipes;
 
     public class MealTypesController : Controller
     {
         private readonly IMealTypesService mealTypes;
-        private readonly IRecipeService recipes;
 
 
         public MealTypesController(IMealTypesService mealTypes)

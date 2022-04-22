@@ -1,11 +1,14 @@
 ﻿namespace RecipesWebApp.Services.Contributors
 {
+    using System.Threading.Tasks;
+
     public interface IContributorService
     {
-        public bool UserIsContributor(string userId);
+        Task<bool> UserIsContributor(string userId);
 
-        public int GetContributorId(string userId);
+        Task<int> GetContributorId(string userId);
 
-        public void CreateContributor(string userId, string firstName, string lastName);
+        void CreateContributor(string userId, string firstName, string lastName);
+
     }
 }
