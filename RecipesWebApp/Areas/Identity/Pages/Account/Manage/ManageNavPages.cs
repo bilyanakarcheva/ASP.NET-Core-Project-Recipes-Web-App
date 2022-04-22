@@ -16,7 +16,7 @@ namespace RecipesWebApp.Areas.Identity.Pages.Account.Manage
 
         public static string DownloadPersonalData => "DownloadPersonalData";
 
-        public static string DeletePersonalData => "DeletePersonalData";
+        //public static string DeletePersonalData => "DeletePersonalData";
 
         public static string PersonalData => "PersonalData";
 
@@ -28,7 +28,7 @@ namespace RecipesWebApp.Areas.Identity.Pages.Account.Manage
 
         public static string DownloadPersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, DownloadPersonalData);
 
-        public static string DeletePersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, DeletePersonalData);
+        //public static string DeletePersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, DeletePersonalData);
 
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
 

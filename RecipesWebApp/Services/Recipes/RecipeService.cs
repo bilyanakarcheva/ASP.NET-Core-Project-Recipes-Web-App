@@ -59,6 +59,25 @@
             };
         }
 
+        public List<RecipeServiceModel> GetLatestRecipes()
+        {
+            var recipes = this.data
+                .Recipes
+                .OrderByDescending(r => r.Id)
+                .Select(r => new RecipeServiceModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    CookingTime = r.CookingTime,
+                    ImageUrl = r.ImageUrl,
+                    MealTypeName = r.MealType.Name
+                })
+                .Take(6)
+                .ToList();
+
+            return recipes;
+        }
+
         public RecipeDetailsServiceModel Details(int recipeId)
         {
             return this.data

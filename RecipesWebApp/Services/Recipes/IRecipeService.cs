@@ -11,6 +11,8 @@
             int currentPage,
             int recipesPerPage);
 
+        public List<RecipeServiceModel> GetLatestRecipes();
+
         RecipeDetailsServiceModel Details(int recipeId);
 
         int Create(

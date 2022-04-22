@@ -1,51 +1,32 @@
 ﻿namespace RecipesWebApp.Controllers
 {
-    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
-    using RecipesWebApp.Data;
     using RecipesWebApp.Services.Recipes;
     using RecipesWebApp.Services.Statistics;
 
     public class HomeController : Controller
     {
-        private readonly IStatisticsService statistics;
-        private readonly RecipesDbContext data;
+        private readonly IRecipeService recipeService;
+        private readonly IStatisticsService statisticsService;
 
         public HomeController(
-            IStatisticsService statistics,
-            RecipesDbContext data)
+            IRecipeService recipeService,
+            IStatisticsService statisticsService)
         {
-            this.statistics = statistics;
-            this.data = data;
+            this.recipeService = recipeService;
+            this.statisticsService = statisticsService;
         }
 
         public IActionResult Index()
         {
-            var totalStatistics = this.statistics.Total();
-            var totalRecipes = totalStatistics.TotalRecipes;
+            var latestRecipes = recipeService.GetLatestRecipes();
 
-            var recipes = this.data
-                .Recipes
-                .OrderByDescending(r => r.Id)
-                .Select(r => new RecipeServiceModel
-                {
-                    Id = r.Id,
-                    Title = r.Title,
-                    CookingTime = r.CookingTime,
-                    ImageUrl = r.ImageUrl,
-                    MealTypeName = r.MealType.Name
-                })
-                .Take(6)
-                .ToList();
-
-
-            return View(recipes);
+            return View(latestRecipes);
         }
 
         public IActionResult Statistics()
         {
-            var totalStatistics = this.statistics.Total();
-            var totalRecipes = totalStatistics.TotalRecipes;
+            var totalStatistics = this.statisticsService.Total();
 
             return View(totalStatistics);
         }
