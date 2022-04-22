@@ -1,16 +1,17 @@
 ﻿namespace RecipesWebApp.Services.MealTypes
 {
+    using System.Linq;
     using RecipesWebApp.Data.Models;
     using RecipesWebApp.Services.Recipes;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.Threading.Tasks;
 
     public interface IMealTypesService
     {
-        public IEnumerable<RecipeServiceModel> RecipesByMealType(int mealTypeId);
+        IEnumerable<RecipeServiceModel> RecipesByMealType(int mealTypeId);
 
-        public int GetMealTypeId(string mealTypeName);
+        Task<int> GetMealTypeId(string mealTypeName);
 
-        public IEnumerable<RecipeServiceModel> GetRecipes(IQueryable<Recipe> recipeQuery);
+        IEnumerable<RecipeServiceModel> GetRecipes(IQueryable<Recipe> recipeQuery);
     }
 }

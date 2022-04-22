@@ -1,5 +1,6 @@
 ﻿namespace RecipesWebApp.Controllers
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using RecipesWebApp.Models.Recipes;
@@ -21,18 +22,18 @@
         }
 
         [Authorize]
-        public IActionResult MyRecipes()
+        public async Task<IActionResult> MyRecipes()
         {
-            var myRecipes = this.recipes.MyRecipes(this.User.GetId());
+            var myRecipes = await this.recipes.MyRecipes(this.User.GetId());
 
             return View(myRecipes);
         }
 
         [Authorize]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
 
-            var recipe = this.recipes.Details(id);
+            var recipe = await this.recipes.Details(id);
 
             return View(new RecipeFormModel
             {
@@ -47,43 +48,49 @@
         }
 
         [Authorize]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            if (!this.contributors.UserIsContributor(this.User.GetId()) && !User.IsAdmin())
+            var isContributor = await this.contributors.UserIsContributor(this.User.GetId());
+
+            if (!isContributor && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
 
             return View(new RecipeFormModel
             {
-                MealTypes = this.recipes.GetMealTypes()
+                MealTypes = await this.recipes.GetMealTypes()
             });
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(RecipeFormModel recipe)
+        public async Task<IActionResult> Add(RecipeFormModel recipe)
         {
-            var contributorId = this.contributors.GetContributorId(this.User.GetId());
+            var contributorId = await this.contributors.GetContributorId(this.User.GetId());
 
-            if (!this.contributors.UserIsContributor(this.User.GetId()) && !User.IsAdmin())
+            var isContributor = await this.contributors.UserIsContributor(this.User.GetId());
+
+            if (!isContributor && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
 
-            if (!this.recipes.MealTypeExists(recipe.MealTypeId))
+            var mealTypeExists = await this.recipes.MealTypeExists(recipe.MealTypeId);
+
+            if (!mealTypeExists)
             {
                 this.ModelState.AddModelError(nameof(recipe.MealTypeId), "Meal Type does not exist.");
             }
 
             if (!ModelState.IsValid)
             {
-                recipe.MealTypes = this.recipes.GetMealTypes();
+                recipe.MealTypes = await this.recipes.GetMealTypes();
 
                 return View(recipe);
             }
 
-            this.recipes.Create(
+            await this.recipes.Create(
                 recipe.Title,
                 recipe.CookingTime,
                 recipe.Portions,
@@ -96,9 +103,10 @@
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult All([FromQuery]RecipeSearchQueryModel query)
+        //CHECK
+        public async Task<IActionResult> All([FromQuery]RecipeSearchQueryModel query)
         {
-            var queryResult = this.recipes.All(
+            var queryResult = await this.recipes.All(
                 query.SearchWord,
                 query.Sorting,
                 query.CurrentPage,
@@ -111,21 +119,25 @@
         }
 
         [Authorize]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var userId = this.User.GetId();
 
-            if (!this.contributors.UserIsContributor(userId) && !User.IsAdmin())
+            var isContributor = await this.contributors.UserIsContributor(this.User.GetId());
+
+            if (!isContributor && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
 
-            var recipe = this.recipes.Details(id);
+            var recipe = await this.recipes.Details(id);
 
             if (recipe.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
             }
+
+            var mealTypes = await this.recipes.GetMealTypes();
 
             return View(new RecipeFormModel
             {
@@ -136,39 +148,45 @@
                 Instructions = recipe.Instructions,
                 ImageUrl = recipe.ImageUrl,
                 MealTypeId = recipe.MealTypeId,
-                MealTypes = this.recipes.GetMealTypes()
-            }); 
+                MealTypes = mealTypes
+            }) ; 
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult Edit(int id, RecipeFormModel recipe)
+        public async Task<IActionResult> Edit(int id, RecipeFormModel recipe)
         {
-            var contributorId = this.contributors.GetContributorId(this.User.GetId());
+            var contributorId = await this.contributors.GetContributorId(this.User.GetId());
 
             if (contributorId == 0 && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ContributorsController.Create), "Contributors");
             }
 
-            if (!this.recipes.MealTypeExists(recipe.MealTypeId))
+            var mealTypeExists = await this.recipes.MealTypeExists(recipe.MealTypeId);
+
+            if (!mealTypeExists)
             {
                 this.ModelState.AddModelError(nameof(recipe.MealTypeId), "Meal Type does not exist.");
             }
 
+            var mealTypes = await this.recipes.GetMealTypes();
+
             if (!ModelState.IsValid)
             {
-                recipe.MealTypes = this.recipes.GetMealTypes();
+                recipe.MealTypes = mealTypes;
 
                 return View(recipe);
             }
 
-            if (!this.recipes.RecipeIsByContributor(id, contributorId) && !User.IsAdmin())
+            var isByContributor = await this.recipes.RecipeIsByContributor(id, contributorId);
+
+            if (!isByContributor && !User.IsAdmin())
             {
                 return BadRequest();
             }
 
-            this.recipes.Edit(
+            await this.recipes.Edit(
                 id,
                 recipe.Title,
                 recipe.CookingTime,
@@ -181,9 +199,9 @@
             return RedirectToAction(nameof(MyRecipes));
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            this.recipes.Delete(id);
+            await this.recipes.Delete(id);
 
             return RedirectToAction(nameof(MyRecipes));
         }

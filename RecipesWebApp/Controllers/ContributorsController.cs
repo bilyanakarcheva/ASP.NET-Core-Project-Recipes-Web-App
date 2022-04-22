@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
     using RecipesWebApp.Models.Contributors;
     using RecipesWebApp.Infrastructure;
     using RecipesWebApp.Services.Contributors;
@@ -23,11 +24,13 @@
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(BecomeContributorFormModel contributor)
+        public async Task<IActionResult> Create(BecomeContributorFormModel contributor)
         {
             var userId = this.User.GetId();
 
-            if (contributors.UserIsContributor(userId))
+            var IsContributor = await contributors.UserIsContributor(userId);
+
+            if (IsContributor)
             {
                 return BadRequest();
             }

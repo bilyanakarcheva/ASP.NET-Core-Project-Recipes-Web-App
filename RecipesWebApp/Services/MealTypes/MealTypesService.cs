@@ -1,10 +1,12 @@
 ﻿namespace RecipesWebApp.Services.MealTypes
 {
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Linq;
     using RecipesWebApp.Data;
     using RecipesWebApp.Data.Models;
     using RecipesWebApp.Services.Recipes;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class MealTypesService : IMealTypesService
     {
@@ -22,12 +24,12 @@
                 .Where(r => r.MealTypeId == mealTypeId));
         }
 
-        public int GetMealTypeId(string mealTypeName)
+        public async Task<int> GetMealTypeId(string mealTypeName)
         {
-             var mealType = this.data
+             var mealType = await this.data
                 .MealTypes
                 .Where(m => m.Name == mealTypeName)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             var mealtypeId = mealType.Id;
 

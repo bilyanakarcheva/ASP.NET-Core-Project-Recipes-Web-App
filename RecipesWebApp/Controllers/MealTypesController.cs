@@ -1,6 +1,7 @@
 ﻿namespace RecipesWebApp.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
     using RecipesWebApp.Services.MealTypes;
 
     public class MealTypesController : Controller
@@ -13,30 +14,30 @@
             this.mealTypes = mealTypes;  
         }
 
-        public IActionResult Soups()
+        public async Task<IActionResult> Soups()
         {
-            int mealTypeId = this.mealTypes.GetMealTypeId(nameof(Soups));
+            int mealTypeId = await this.mealTypes.GetMealTypeId(nameof(Soups));
             var soups = this.mealTypes.RecipesByMealType(mealTypeId);
 
             return View(soups);
         }
-        public IActionResult Salads()
+        public async Task<IActionResult> Salads()
         {
-            int mealTypeId = this.mealTypes.GetMealTypeId(nameof(Salads));
+            int mealTypeId = await this.mealTypes.GetMealTypeId(nameof(Salads));
             var salads = this.mealTypes.RecipesByMealType(mealTypeId);
 
             return View(salads);
         }
-        public IActionResult MainCourses()
+        public async Task<IActionResult> MainCourses()
         {
-            int mealTypeId = this.mealTypes.GetMealTypeId("Main Courses");
+            int mealTypeId = await this.mealTypes.GetMealTypeId("Main Courses");
             var mainCourse = this.mealTypes.RecipesByMealType(mealTypeId);
 
             return View(mainCourse);
         }
-        public IActionResult Desserts()
+        public async Task<IActionResult> Desserts()
         {
-            int mealTypeId = this.mealTypes.GetMealTypeId(nameof(Desserts));
+            int mealTypeId = await this.mealTypes.GetMealTypeId(nameof(Desserts));
             var dessert = this.mealTypes.RecipesByMealType(mealTypeId);
 
             return View(dessert);

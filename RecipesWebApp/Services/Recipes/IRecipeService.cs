@@ -1,21 +1,22 @@
 ﻿namespace RecipesWebApp.Services.Recipes
 {
-    using RecipesWebApp.Models.Recipes;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using RecipesWebApp.Models.Recipes;
 
     public interface IRecipeService
     {
-        RecipeQueryServiceModel All(
+        Task<RecipeQueryServiceModel> All(
             string searchWord,
             RecipeSorting sorting,
             int currentPage,
             int recipesPerPage);
 
-        public List<RecipeServiceModel> GetLatestRecipes();
+        Task<List<RecipeServiceModel>> GetLatestRecipes();
 
-        RecipeDetailsServiceModel Details(int recipeId);
+        Task<RecipeDetailsServiceModel> Details(int recipeId);
 
-        int Create(
+        Task<int> Create(
                 string title,
                 string cookingTime,
                 int portions,
@@ -25,7 +26,8 @@
                 int mealTypeId,
                 int contributorId);
 
-        bool Edit(
+
+        Task<bool> Edit(
             int id,
             string title,
             string cookingTime,
@@ -35,16 +37,16 @@
             string imageUrl,
             int mealTypeId);
 
-        bool Delete(int id);
+        Task<bool> Delete(int id);
 
-        IEnumerable<RecipeServiceModel> MyRecipes(string userId);
+        Task<IEnumerable<RecipeServiceModel>> MyRecipes(string userId);
 
-        IEnumerable<RecipeServiceModel> RecipesByMealType(int mealTypeId);
+        Task<IEnumerable<RecipeServiceModel>> RecipesByMealType(int mealTypeId);
 
 
-        IEnumerable<RecipeMealTypeServiceModel> GetMealTypes();
+        Task<IEnumerable<RecipeMealTypeServiceModel>> GetMealTypes();
 
-        bool MealTypeExists(int mealTypeId);
-        bool RecipeIsByContributor(int recipeId, int contributorId);
+        Task<bool> MealTypeExists(int mealTypeId);
+        Task<bool> RecipeIsByContributor(int recipeId, int contributorId);
     }
 }

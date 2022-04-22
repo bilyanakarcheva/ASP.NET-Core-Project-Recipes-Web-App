@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using RecipesWebApp.Services.Recipes;
     using RecipesWebApp.Services.Statistics;
+    using System.Threading.Tasks;
 
     public class HomeController : Controller
     {
@@ -17,9 +18,9 @@
             this.statisticsService = statisticsService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var latestRecipes = recipeService.GetLatestRecipes();
+            var latestRecipes = await recipeService.GetLatestRecipes();
 
             return View(latestRecipes);
         }

@@ -1,10 +1,12 @@
 ﻿namespace RecipesWebApp.Services.Recipes
 {
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using System.Linq;
     using RecipesWebApp.Data;
     using RecipesWebApp.Data.Models;
     using RecipesWebApp.Models.Recipes;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class RecipeService : IRecipeService
     {
@@ -15,7 +17,7 @@
             this.data = data;
         }
 
-        public RecipeQueryServiceModel All(
+        public async Task<RecipeQueryServiceModel> All(
             string searchWord,
             RecipeSorting sorting,
             int currentPage,
@@ -46,7 +48,7 @@
 
             var totalRecipes = recipeQuery.Count();
 
-            var recipes = GetRecipes(recipeQuery
+            var recipes = await GetRecipes(recipeQuery
                 .Skip((currentPage - 1) * recipesPerPage)
                 .Take(recipesPerPage));
 
@@ -59,9 +61,9 @@
             };
         }
 
-        public List<RecipeServiceModel> GetLatestRecipes()
+        public async Task<List<RecipeServiceModel>> GetLatestRecipes()
         {
-            var recipes = this.data
+            var recipes = await this.data
                 .Recipes
                 .OrderByDescending(r => r.Id)
                 .Select(r => new RecipeServiceModel
@@ -73,14 +75,14 @@
                     MealTypeName = r.MealType.Name
                 })
                 .Take(6)
-                .ToList();
+                .ToListAsync();
 
             return recipes;
         }
 
-        public RecipeDetailsServiceModel Details(int recipeId)
+        public async Task<RecipeDetailsServiceModel> Details(int recipeId)
         {
-            return this.data
+            return await this.data
                 .Recipes
                 .Where(r => r.Id == recipeId)
                 .Select(r => new RecipeDetailsServiceModel
@@ -98,11 +100,11 @@
                     LastName = r.Contributor.LastName,
                     UserId = r.Contributor.UserId
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
         }
 
-        public int Create(
+        public async Task<int> Create(
             string title,
             string cookingTime,
             int portions,
@@ -124,14 +126,14 @@
                 ContributorId = contributorId
             };
 
-            this.data.Recipes.Add(recipeData);
-            this.data.SaveChanges();
+            await this.data.Recipes.AddAsync(recipeData);
+            await this.data.SaveChangesAsync();
 
             return recipeData.Id;
         }
 
 
-        public bool Edit(
+        public async Task<bool> Edit(
             int recipeId,
             string title,
             string cookingTime,
@@ -156,14 +158,14 @@
             recipeData.ImageUrl = imageUrl;
             recipeData.MealTypeId = mealTypeId;
 
-            this.data.SaveChanges();
+            await this.data.SaveChangesAsync();
 
             return true;
         }
 
-        public bool Delete(int recipeId)
+        public async Task<bool> Delete(int recipeId)
         {
-            var recipeData = this.data.Recipes.Find(recipeId);
+            var recipeData = await this.data.Recipes.FindAsync(recipeId);
 
             if (recipeData == null)
             {
@@ -172,30 +174,30 @@
 
             this.data.Recipes.Remove(recipeData);
 
-            this.data.SaveChanges();
+            await this.data.SaveChangesAsync();
 
             return true;
         }
 
-        public IEnumerable<RecipeServiceModel> MyRecipes(string userId)
+        public async Task<IEnumerable<RecipeServiceModel>> MyRecipes(string userId)
         {
-            return this.GetRecipes(this.data
+            return await this.GetRecipes(this.data
                 .Recipes
                 .Where(r => r.Contributor.UserId == userId));
         }
 
-        public bool RecipeIsByContributor(int recipeId, int contributorId)
+        public async Task<bool> RecipeIsByContributor(int recipeId, int contributorId)
         {
-            var isContributor = this.data
+            var isContributor = await this.data
                 .Recipes
-                .Any(r => r.Id == recipeId && r.ContributorId == contributorId);
+                .AnyAsync(r => r.Id == recipeId && r.ContributorId == contributorId);
 
             return isContributor;
         }
 
-        public IEnumerable<RecipeServiceModel> GetRecipes(IQueryable<Recipe> recipeQuery)
+        public async Task<IEnumerable<RecipeServiceModel>> GetRecipes(IQueryable<Recipe> recipeQuery)
         {
-            return recipeQuery
+            return await recipeQuery
                     .Select(r => new RecipeServiceModel
                     {
                         Id = r.Id,
@@ -204,33 +206,33 @@
                         ImageUrl = r.ImageUrl,
                         MealTypeName = r.MealType.Name
                     })
-                    .ToList();
+                    .ToListAsync();
         }
 
-        public IEnumerable<RecipeMealTypeServiceModel> GetMealTypes()
+        public async Task<IEnumerable<RecipeMealTypeServiceModel>> GetMealTypes()
         {
-            return this.data
+            return await this.data
                 .MealTypes
                 .Select(t => new RecipeMealTypeServiceModel
                 {
                     Id = t.Id,
                     Name = t.Name
                 })
-                .ToList();
+                .ToListAsync();
         }
 
-        public IEnumerable<RecipeServiceModel> RecipesByMealType(int mealTypeId)
+        public async Task<IEnumerable<RecipeServiceModel>> RecipesByMealType(int mealTypeId)
         {
-            return this.GetRecipes(this.data
+            return await this.GetRecipes(this.data
                 .Recipes
                 .Where(r => r.MealTypeId == mealTypeId));
         }
 
-        public bool MealTypeExists(int mealTypeId)
+        public async Task<bool> MealTypeExists(int mealTypeId)
         {
-            return this.data
+            return await this.data
                 .MealTypes
-                .Any(m => m.Id == mealTypeId);
+                .AnyAsync(m => m.Id == mealTypeId);
         }
     }
 }

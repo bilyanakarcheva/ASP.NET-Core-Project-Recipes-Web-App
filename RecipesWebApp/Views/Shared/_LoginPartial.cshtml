@@ -8,7 +8,7 @@
 @if (SignInManager.IsSignedIn(User))
 { 
     var userId = User.GetId();
-        var userIsContributor = Contributors.UserIsContributor(userId);
+        var userIsContributor = await Contributors.UserIsContributor(userId);
         var userIsAdmin = User.IsAdmin();
 
     @if (userIsContributor && !userIsAdmin)
